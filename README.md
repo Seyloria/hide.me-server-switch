@@ -6,9 +6,10 @@ This small linux bash script lets you easily switch the hide.me VPN Server by ma
 ## Installation
 Install the [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) as described.
 
-Navigate to where you want to store the script inside your home directory and copy the following into your terminal to download the bash script file:
+Navigate to where you want to store the script and serverlist inside your home directory and copy the following into your terminal to download the files:
 ```sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-switch/main/hide.me-sw.sh
+curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-switch/main/serverlist.txt
 ```
 
 ## Optional Settings

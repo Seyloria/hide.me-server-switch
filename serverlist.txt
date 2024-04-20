@@ -1,0 +1,55 @@
+al.Albania
+ar.Argentina
+at.Austria
+au.Australia
+be.Belgium
+br.Brasil
+bg.Bulgaria
+kh.Cambodia
+ca.Canada
+co.Colombia
+cl.Chile
+hr.Croatia
+cz.Czech Republic
+dk.Denmark
+eg.Egypt
+fi.Finland
+fr.France
+de.Germany
+gr.Greece
+hk.Hong Kong
+hu.Hungary
+is.Iceland
+id.Indonesia
+ie.Ireland
+it.Italy
+jp.Japan
+lt.Lithuania
+lu.Luxembourg
+my.Malaysia
+mx.Mexico
+md.Moldova
+ma.Morocco
+nl.Netherlands
+nz.New Zealand
+no.Norway
+ph.Philippines
+pl.Poland
+pt.Portugal
+ro.Romania
+rs.Serbia
+sg.Singapore
+za.South Africa
+kr.South Korea
+sk.Slovakia
+es.Spain
+se.Sweden
+ch.Switzerland
+th.Thailand
+tw.Taiwan
+tr.Turkey
+ua.Ukraine
+ae.United Arab Emirates
+uk.United Kingdom
+us.United States
+vn.Vietnam
