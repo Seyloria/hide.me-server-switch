@@ -1,5 +1,5 @@
-# hide.me-server-switch
 ![Showcase](/hide.me-sw-banner.png)
+
 This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) and its Linux Systemd integration.
 
 ![Showcase](/example-sw.jpg)
