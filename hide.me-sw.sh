@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 currentserver=$(systemctl list-units --type=service --state=running | grep -w "hide")
 currentshort=${currentserver:95:2}
@@ -11,99 +11,120 @@ echo -e '\E[37;46m'"\033[1m >> hide.me VPN Server Selection << \033[0m"
 echo -e '\E[37;46m'"\033[1m------------------------------------\033[0m\n"
 tput sgr0
 
-case "$currentautoshort" in
-	"") echo -e "\033[1mSystem Startup Server:\033[0m Nothing defined\n"
+servers=()
+while IFS= read -r line; do
+    servers+=("$line")
+done < "serverlist.txt"
+
+declare -a servers_s
+declare -a servers_l
+
+for i in ${!servers[@]}; do
+	servers_s+=("${servers[$i]:0:2}");
+#	echo ${servers_s[$i]}
+done
+
+for i in ${!servers[@]}; do
+	servers_l+=("${servers[$i]:3}");
+#	echo ${servers_s[$i]}
+done
+
+# unkown use
+#for i in "${!server_l[@]}"; do
+#   echo "i  -> ${server_l[$i]}"
+#done
+
+
+#echo ${servers_s[0]}
+
+# echo all servers in $servers_s
+#for i in ${!servers_s[@]}; do
+#	echo "${servers_s[$i]}";
+#done
+
+get_startup_vpn_name () {
+	for i in ${!servers[@]}; do
+		if [[ "${servers[i]:0:2}" == "$currentautoshort" ]];
+		then
+			echo "${servers[$i]}";
+#			echo "{$i}";
+		fi
+	done
+}
+
+startup_vpn_full="$(get_startup_vpn_name)"
+
+case "$startup_vpn_full" in
+	"") echo -e "\033[1mSystem Startup VPN Server:\033[0m \E[1,31inactive\n"
 	;;
-	"at") echo -e "\033[1mSystem Startup Server:\033[0m Austria Server\n"
-	;;
-	"be") echo -e "\033[1mSystem Startup Server:\033[0m Belgium Server\n"
-	;;
-	"dk") echo -e "\033[1mSystem Startup Server:\033[0m Denmark Server\n"
-	;;
-	"de") echo -e "\033[1mSystem Startup Server:\033[0m Germany Server\n"
+	*) echo -e "\033[1mSystem Startup VPN Server:\033[0m ${startup_vpn_full:3}(${startup_vpn_full:0:2}) \n"
 	;;
 esac
 
+get_current_vpn_name () {
+	for i in ${!servers[@]}; do
+		if [[ "${servers[i]:0:2}" == "$currentshort" ]];
+		then
+			echo "${servers[$i]}";
+#			echo "{$i}";
+		fi
+	done
+}
 
-case "$currentshort" in
-	"") echo -e "\033[1mCurrent VPN Server:\033[0m Not connected to any hide.me VPN Server\n"
+current_vpn_full="$(get_current_vpn_name)"
+
+case "$current_vpn_full" in
+	"") echo -e "\033[1mCurrent VPN Server:\033[0m \E[31;1minactive\n"
 	;;
-	"at") echo -e "\033[1mCurrent VPN Server:\033[0m Austria Server\n"
-	;;
-	"be") echo -e "\033[1mCurrent VPN Server:\033[0m Belgium Server\n"
-	;;
-	"dk") echo -e "\033[1mCurrent VPN Server:\033[0m Denmark Server\n"
-	;;
-	"de") echo -e "\033[1mCurrent VPN Server:\033[0m Germany Server\n"
+	*) echo -e "\033[1mCurrent VPN Server:\033[0m ${current_vpn_full:3}(${current_vpn_full:0:2} - $currentextip) \n"
 	;;
 esac
-
-echo -e "\033[1mCurrent External IP:\033[0m $currentextip\n"
 tput sgr0
+servers_total=${#servers[@]}
+#echo -e "\033[1mTotal Servers:\033[0m $servers_total\n"
 
-PS3="Select the hide.me VPN-Server location you want to use:"
-
-select server in "Austria" "Belgium" "Denmark" "Germany" "Stop VPN Connection" "Quit"; do
-	case $server in
-		Austria)
+show_menu() {
+PS3="Select an option: "
+	select server in "${servers_l[@]}" "Disconnect VPN" "Quit"; do
+		if [[ "$REPLY" -le ${#servers_l[@]} ]]; then
 			if [ "$currentshort" == "" ];
-			then 
-				sudo systemctl start hide.me@at
-			else
-				sudo systemctl stop hide.me@$currentshort
-				sudo systemctl start hide.me@at
-			fi
-			echo "Connected to the" $server "Server!"
-			break
-			;;
-		Belgium)
-			if [ "$currentshort" == "" ];
-			then 
-				sudo systemctl start hide.me@be
-			else
-				sudo systemctl stop hide.me@$currentshort
-				sudo systemctl start hide.me@be
-			fi
-			echo "Connected to the" $server "Server!"
-			break
-			;;
-		Denmark)
-			if [ "$currentshort" == "" ];
-			then 
-				sudo systemctl start hide.me@dk
-			else
-				sudo systemctl stop hide.me@$currentshort
-				sudo systemctl start hide.me@dk
-			fi
-			echo "Connected to the" $server "Server!"
-			break
-			;;
-		Germany)
-			if [ "$currentshort" == "" ];
-			then 
-				sudo systemctl start hide.me@de
-			else
-				sudo systemctl stop hide.me@$currentshort
-				sudo systemctl start hide.me@de
-			fi
-			echo "Connected to the" $server "Server!"
-			break
-			;;
-		"Stop VPN Connection")
-			if [ "$currentshort" == "" ];
-			then 
-				echo "nothing to stop here..."
-			else
-				sudo systemctl stop hide.me@$currentshort
-				echo "VPN-Connection terminated!"	
-			fi
-			;;
-		Quit)
+						then
+#        					This triggers when there is currently no VPN connection
+							sudo systemctl start hide.me@${servers_s[(($REPLY - 1))]}
+        				else
+#							This triggers when there is currently a VPN connection
+#							echo "$currentshort - currently"
+							sudo systemctl stop hide.me@$currentshort
+#							echo "systemd stop $currentshort"
+							sudo systemctl start hide.me@${servers_s[(($REPLY - 1))]}
+#							echo "systemd connected to $currentshort"
+						fi
+						echo "Connected to the" $server "Server!"
+						exit 0
+			echo "You selected: $server"
 			echo "bye.."
-			break
-			;;
-		*) 
-			echo "$REPLY is not a valid option, please select another option."
-			;;
-	esac
+			exit 0
+		elif [[ "$REPLY" -eq $(( ${#servers_l[@]} + 1 )) ]]; then
+			if [ "$currentshort" == "" ];
+						then
+							echo "Nothing to stop here..."
+							break
+						else
+							sudo systemctl stop hide.me@$currentshort
+							echo "VPN Connection terminated!"	
+						fi
+			echo "bye.."
+			exit 0
+		elif [[ "$REPLY" -eq $(( ${#servers_l[@]} + 2 )) ]]; then
+			echo "Quitting bye..."
+			exit 0
+		else
+			echo "Invalid option. Please select a option between 1 and ${#servers[@]}, or $(( ${#servers[@]} + 2 )) to Quit."
+		fi
+	done
+}
+
+# Main script
+while true; do
+    show_menu
 done
