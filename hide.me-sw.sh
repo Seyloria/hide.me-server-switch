@@ -29,15 +29,9 @@ for i in ${!servers[@]}; do
 #	echo ${servers_s[$i]}
 done
 
-# unkown use
-#for i in "${!server_l[@]}"; do
-#   echo "i  -> ${server_l[$i]}"
-#done
-
-
 #echo ${servers_s[0]}
 
-# echo all servers in $servers_s
+# prints all servers in $servers_s
 #for i in ${!servers_s[@]}; do
 #	echo "${servers_s[$i]}";
 #done
