@@ -1,5 +1,7 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
+# gets the basic data to work with:
+get_workingdir=${0%/*}
+workingdir="$get_workingdir/serverlist.txt"
 currentserver=$(systemctl list-units --type=service --state=running | grep -w "hide")
 currentshort=${currentserver:95:2}
 currentauto=$(systemctl list-unit-files --type=service --state=enabled | grep -w "hide")
@@ -14,7 +16,8 @@ tput sgr0
 servers=()
 while IFS= read -r line; do
     servers+=("$line")
-done < "serverlist.txt"
+done < "$workingdir"
+#done < "serverlist.txt"
 
 declare -a servers_s
 declare -a servers_l
