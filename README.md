@@ -37,7 +37,7 @@ sudo systemctl disable hide.me@dk
 
 ## Changelog and current state
 
-- [x] 21-04-2024 | v1.0 | Update to make the script always find to make serverlist.txt
+- [x] 21-04-2024 | v1.0 | Update to make the script always find serverlist.txt
 - [x] 20-04-2024 | v0.8 | Basic working version of the rewritten script
 - [x] 18-04-2024 | v0.1 | Basic showcase version
 
