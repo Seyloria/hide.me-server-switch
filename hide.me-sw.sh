@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# gets the basic data to work with:
+# Gets the basic data to work with:
 get_workingdir=${0%/*}
 workingdir="$get_workingdir/serverlist.txt"
 currentserver=$(systemctl list-units --type=service --state=running | grep -w "hide")
@@ -13,12 +13,13 @@ echo -e '\E[37;46m'"\033[1m >> hide.me VPN Server Selection << \033[0m"
 echo -e '\E[37;46m'"\033[1m------------------------------------\033[0m\n"
 tput sgr0
 
+# Reads the serverlist.txt and writes it to an array
 servers=()
 while IFS= read -r line; do
     servers+=("$line")
 done < "$workingdir"
-#done < "serverlist.txt"
 
+# Fill $serers_s and $servers_l array from $servers
 declare -a servers_s
 declare -a servers_l
 
@@ -29,16 +30,15 @@ done
 
 for i in ${!servers[@]}; do
 	servers_l+=("${servers[$i]:3}");
-#	echo ${servers_s[$i]}
+#	echo ${servers_l[$i]}
 done
 
-#echo ${servers_s[0]}
-
-# prints all servers in $servers_s
+# prints all servers in $servers_s - not needed just for debug
 #for i in ${!servers_s[@]}; do
 #	echo "${servers_s[$i]}";
 #done
 
+# gets the currently declared  startup server
 get_startup_vpn_name () {
 	for i in ${!servers[@]}; do
 		if [[ "${servers[i]:0:2}" == "$currentautoshort" ]];
@@ -48,9 +48,9 @@ get_startup_vpn_name () {
 		fi
 	done
 }
-
 startup_vpn_full="$(get_startup_vpn_name)"
 
+# Shows Startup Server
 case "$startup_vpn_full" in
 	"") echo -e "\033[1mSystem Startup VPN Server:\033[0m \E[1,31inactive\n"
 	;;
@@ -58,6 +58,7 @@ case "$startup_vpn_full" in
 	;;
 esac
 
+# gets the currently connected VPN Server
 get_current_vpn_name () {
 	for i in ${!servers[@]}; do
 		if [[ "${servers[i]:0:2}" == "$currentshort" ]];
@@ -68,6 +69,7 @@ get_current_vpn_name () {
 	done
 }
 
+# Shows the current VPN Server
 current_vpn_full="$(get_current_vpn_name)"
 
 case "$current_vpn_full" in
@@ -78,8 +80,9 @@ case "$current_vpn_full" in
 esac
 tput sgr0
 servers_total=${#servers[@]}
-#echo -e "\033[1mTotal Servers:\033[0m $servers_total\n"
+echo -e "\033[1mTotal Servers:\033[0m $servers_total\n"
 
+# Main script to generate the menu
 show_menu() {
 PS3="Select an option: "
 	select server in "${servers_l[@]}" "Disconnect VPN" "Quit"; do
@@ -121,7 +124,7 @@ PS3="Select an option: "
 	done
 }
 
-# Main script
+# Show menu
 while true; do
     show_menu
 done
