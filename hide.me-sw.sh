@@ -8,9 +8,9 @@ currentauto=$(systemctl list-unit-files --type=service --state=enabled | grep -w
 currentautoshort=${currentauto:8:2}
 currentextip=$(curl -s -4 icanhazip.com)
 
-echo -e '\n\E[37;46m'"\033[1m------------------------------------\033[0m"
-echo -e '\E[37;46m'"\033[1m >> hide.me VPN Server Selection << \033[0m"
-echo -e '\E[37;46m'"\033[1m------------------------------------\033[0m\n"
+echo -e '\n\E[37;46m'"\033[1m---------------------------------------\033[0m"
+echo -e '\E[37;46m'"\033[1m >> hide.me VPN Server Switch v.1.1 << \033[0m"
+echo -e '\E[37;46m'"\033[1m---------------------------------------\033[0m\n"
 tput sgr0
 
 # Reads the serverlist.txt and writes it to an array
