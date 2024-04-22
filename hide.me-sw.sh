@@ -54,7 +54,7 @@ startup_vpn_full="$(get_startup_vpn_name)"
 case "$startup_vpn_full" in
 	"") echo -e "\033[1mSystem Startup VPN Server:\033[0m \E[31;1minactive\n"
 	;;
-	*) echo -e "\033[1mSystem Startup VPN Server:\033[0m ${startup_vpn_full:3}(${startup_vpn_full:0:2}) \n"
+	*) echo -e "\033[1mSystem Startup VPN Server:\033[0m ${startup_vpn_full:3} (${startup_vpn_full:0:2}) \n"
 	;;
 esac
 tput sgr0
@@ -76,7 +76,7 @@ current_vpn_full="$(get_current_vpn_name)"
 case "$current_vpn_full" in
 	"") echo -e "\033[1mCurrent VPN Server:\033[0m \E[31;1minactive\n"
 	;;
-	*) echo -e "\033[1mCurrent VPN Server:\033[0m ${current_vpn_full:3}(${current_vpn_full:0:2} - $currentextip) \n"
+	*) echo -e "\033[1mCurrent VPN Server:\033[0m ${current_vpn_full:3} (${current_vpn_full:0:2} - $currentextip) \n"
 	;;
 esac
 tput sgr0
