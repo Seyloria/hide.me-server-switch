@@ -33,9 +33,9 @@ for i in ${!servers[@]}; do
 #	echo ${servers_l[$i]}
 done
 
-# prints all servers in $servers_s - not needed just for debug
-#for i in ${!servers_s[@]}; do
-#	echo "${servers_s[$i]}";
+# prints all arry entrys in $servers - not needed just for debug
+#for i in ${!servers[@]}; do
+#	echo "${servers[$i]}";
 #done
 
 # gets the currently declared  startup server
@@ -52,11 +52,12 @@ startup_vpn_full="$(get_startup_vpn_name)"
 
 # Shows Startup Server
 case "$startup_vpn_full" in
-	"") echo -e "\033[1mSystem Startup VPN Server:\033[0m \E[1,31inactive\n"
+	"") echo -e "\033[1mSystem Startup VPN Server:\033[0m \E[31;1minactive\n"
 	;;
 	*) echo -e "\033[1mSystem Startup VPN Server:\033[0m ${startup_vpn_full:3}(${startup_vpn_full:0:2}) \n"
 	;;
 esac
+tput sgr0
 
 # gets the currently connected VPN Server
 get_current_vpn_name () {
@@ -79,9 +80,10 @@ case "$current_vpn_full" in
 	;;
 esac
 tput sgr0
+
 servers_total=${#servers[@]}
 echo -e "\033[1mTotal Servers:\033[0m $servers_total\n"
-
+tput sgr0
 # Main script to generate the menu
 show_menu() {
 PS3="Select an option: "
