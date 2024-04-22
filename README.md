@@ -14,6 +14,12 @@ curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-switch/main/h
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-switch/main/serverlist.txt
 ```
 
+Make sure the script is executable by setting the chmod permissions:
+```sh
+chmod 755 hide.me-sw.sh
+```
+
+
 ## Optional Settings
 Additionally you can add the following line to your .bashrc or .zshrc:
 ```sh
@@ -37,6 +43,7 @@ sudo systemctl disable hide.me@dk
 
 ## Changelog and current state
 
+- [x] 22-04-2024 | v1.1 | Fix a bug in the startup server message, when no server is defined
 - [x] 21-04-2024 | v1.0 | Update to make the script always find serverlist.txt
 - [x] 20-04-2024 | v0.8 | Basic working version of the rewritten script
 - [x] 18-04-2024 | v0.1 | Basic showcase version
