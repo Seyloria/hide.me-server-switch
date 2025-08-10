@@ -1,5 +1,12 @@
 ![Banner](/hide.me-sw-banner.png)
 
+# :bangbang: unmainted! -> please use [hide.me Server Select](https://github.com/Seyloria/hide.me-server-select) from now on
+The project still works but is unmainted. A newer version of the script has been created @ [hide.me Server Select](https://github.com/Seyloria/hide.me-server-select).
+It has more features, is systemd agnostic and way fancier :star_struck:
+<br/>
+<br/>
+---
+
 This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) and its Linux Systemd integration.
 
 ![Showcase](/hide.me-switch-showcase.gif)
